@@ -1,0 +1,2 @@
+**/*/node_modules/*
+!./cells/node_modules/lib/*
