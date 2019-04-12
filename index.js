@@ -8,7 +8,6 @@ const fsDir = require('util').promisify(require('fs').readdir)
 const lstat = require('util').promisify(require('fs').lstat)
 
 module.exports = function (angel) {
-
   angel.on(/repo cmodule (.*) -- (.*)/, function (angel, done) {
     let moduleName = angel.cmdData[1]
     let cmd = angel.cmdData[2]
