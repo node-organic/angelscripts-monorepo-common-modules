@@ -15,7 +15,7 @@ module.exports = function (angel) {
     executeCommandOnModules(cmd, [moduleName]).then(() => done()).catch(done)
   })
   angel.on(/repo cmodules -- (.*)/, function (angel, done) {
-    let cmd = angel.cmdData[2]
+    let cmd = angel.cmdData[1]
     executeCommandOnModules(cmd).then(() => done()).catch(done)
   })
 }
