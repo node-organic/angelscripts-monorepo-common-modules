@@ -1,10 +1,15 @@
 {
   "name": "angelscripts-monorepo-common-modules",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"no test specified\"",
+    "preversion": "eslint ./ && npm test",
+    "release-patch": "npm version patch && npm publish",
+    "release-minor": "npm version minor && npm publish",
+    "release-major": "npm version major && npm publish",
+    "postversion": "git push origin master && git push origin master --tags"
   },
   "author": "Boris Filipov",
   "license": "MIT",
