@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "chalk": "^2.4.2",
-    "organic-stem-skeleton-find-root": "^2.0.0",
+    "organic-stem-skeleton-find-root": "^2.0.1",
     "p-iteration": "^1.1.8",
     "terminate": "^2.1.2"
   },

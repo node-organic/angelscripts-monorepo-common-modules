@@ -8,14 +8,26 @@ const fsDir = require('util').promisify(require('fs').readdir)
 const lstat = require('util').promisify(require('fs').lstat)
 
 module.exports = function (angel) {
-  angel.on(/repo cmodule (.*) -- (.*)/, function (angel, done) {
+  angel.on(/cmodule (.*) -- (.*)/, function (angel, done) {
     let moduleName = angel.cmdData[1]
     let cmd = angel.cmdData[2]
     executeCommandOnModules(cmd, [moduleName]).then(() => done()).catch(done)
   })
-  angel.on(/repo cmodules -- (.*)/, function (angel, done) {
+  angel.on(/cmodules -- (.*)/, function (angel, done) {
     let cmd = angel.cmdData[1]
     executeCommandOnModules(cmd).then(() => done()).catch(done)
+  })
+  angel.on(/cmodules/, async function (angel, done) {
+    const fullRepoPath = await findSkeletonRoot()
+    let cmodulesPath = path.join(fullRepoPath, 'cells/node_modules')
+    let names = await listModuleNames(cmodulesPath)
+    console.log(names.join('\n'))
+  })
+  angel.on(/cmodules.json/, async function (angel, done) {
+    const fullRepoPath = await findSkeletonRoot()
+    let cmodulesPath = path.join(fullRepoPath, 'cells/node_modules')
+    let names = await listModuleNames(cmodulesPath)
+    console.log(JSON.stringify(names))
   })
 }
 
@@ -54,16 +66,20 @@ const executeCommand = async function ({ moduleName, cmd, cwd, env, childHandler
     })
   })
 }
-const executeCommandOnModules = function (cmd, moduleNames) {
+const listModuleNames = async function (cmodulesPath, allowedModuleNames) {
+  let names = await fsDir(cmodulesPath)
+  names = await filter(names, async (name) => {
+    if (allowedModuleNames && allowedModuleNames.indexOf(name) === -1) return false
+    let stat = await lstat(path.join(cmodulesPath, name))
+    return stat.isDirectory()
+  })
+  return names
+}
+const executeCommandOnModules = function (cmd, allowedModuleNames) {
   return new Promise(async (resolve, reject) => {
     const fullRepoPath = await findSkeletonRoot()
     let cmodulesPath = path.join(fullRepoPath, 'cells/node_modules')
-    let names = await fsDir(cmodulesPath)
-    names = await filter(names, async (name) => {
-      if (moduleNames && moduleNames.indexOf(name) === -1) return false
-      let stat = await lstat(path.join(cmodulesPath, name))
-      return stat.isDirectory()
-    })
+    let names = await listModuleNames(cmodulesPath, allowedModuleNames)
     let tasks = names.map((name) => {
       return {
         name: name,

@@ -15,13 +15,25 @@ $ npm i angelscripts-monorepo-common-modules --save-dev
 ### execute command to single common module
 
 ```
-$ npx angel repo cmodule {module-name} -- {command}
+$ npx angel cmodule {module-name} -- {command}
 ```
 
 ### execute command to all common modules
 
 ```
-$ npx angel repo cmodules -- {command}
+$ npx angel cmodules -- {command}
+```
+
+### list available common modules
+
+```
+$ npx angel cmodules
+```
+
+### list available common modules (as json)
+
+```
+$ npx angel cmodules.json
 ```
 
 ## example
