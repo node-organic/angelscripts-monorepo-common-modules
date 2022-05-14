@@ -1,6 +1,6 @@
 {
   "name": "angelscripts-monorepo-common-modules",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "An angel commands aiding in management of common modules of organic monorepos following stem skeleton 2.1 structure.",
   "main": "index.js",
   "scripts": {
