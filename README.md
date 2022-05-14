@@ -1,7 +1,3 @@
-# Deprecated. 
-
-Code moved into [angelscripts-monorepo-cells](https://github.com/node-organic/angelscripts-monorepo-cells)
-
 # angelscripts-monorepo-common-modules
 
 An angel commands aiding in management of common modules of organic monorepos following stem skeleton 2.1 structure.
