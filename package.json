@@ -13,9 +13,6 @@
   },
   "author": "Boris Filipov",
   "license": "MIT",
-  "peerDependencies": {
-    "organic-angel": "^0.3.2"
-  },
   "dependencies": {
     "chalk": "^2.4.2",
     "organic-stem-skeleton-find-root": "^2.0.1",
